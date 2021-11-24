@@ -26,3 +26,18 @@ d3.json("samples.json").then((bbdata) => {
         var demoKeys = Object.keys(data.metadata[index]);
         var demoValues = Object.values(data.metadata[index])
         var demoData = d3.select('#sample-metadata');
+
+        demoData.html("");
+
+        for (var i = 0; i < demoKeys.length; i++) {
+
+            demoData.append("p").text(`${demoKeys[i]}: ${demoValues[i]}`);
+        };
+
+        var topotu = OTUs.slice(0, 10).reverse();
+        var topfreq = subfreq.slice(0, 10).reverse();
+        var toptips = data.samples[0].otu_labels.slice(0, 10).reverse();
+        var toplabels = topotu.map((otu => "OTU " + otu));
+        var revlabels = toplabels.reverse();
+
+        
