@@ -40,4 +40,25 @@ d3.json("samples.json").then((bbdata) => {
         var toplabels = topotu.map((otu => "OTU " + otu));
         var revlabels = toplabels.reverse();
 
-        
+        var trace1 = {
+            x: topfreq,
+            y: revlabels,
+            text: toptips,
+            name: "",
+            type: "bar",
+            orientation: "h"
+        };
+
+        var barData = [trace1];
+
+
+        var layout = {
+            title: "Top 10 OTUs",
+            margin: {
+                l: 75,
+                r: 75,
+                t: 75,
+                b: 50
+            }
+        };
+
