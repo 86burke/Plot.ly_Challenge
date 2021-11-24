@@ -9,3 +9,16 @@ d3.json("samples.json").then((bbdata) => {
         selectBox = d3.select("#selDataset");
         selectBox.append("option").text(idDD[x]);
     }
+
+    bbplot(0)
+
+    function bbplot(index) {
+
+
+        var OTUs = data.samples[index].otu_ids;
+        console.log(OTUs);
+        var subfreq = data.samples[index].sample_values;
+        var otulabels = data.samples[index].otu_labels;
+
+        var washfreq = data.metadata[+index].wfreq;
+        console.log(washfreq);
