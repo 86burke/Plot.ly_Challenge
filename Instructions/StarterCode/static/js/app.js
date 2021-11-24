@@ -22,3 +22,7 @@ d3.json("samples.json").then((bbdata) => {
 
         var washfreq = data.metadata[+index].wfreq;
         console.log(washfreq);
+
+        var demoKeys = Object.keys(data.metadata[index]);
+        var demoValues = Object.values(data.metadata[index])
+        var demoData = d3.select('#sample-metadata');
