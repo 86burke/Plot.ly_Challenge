@@ -62,3 +62,36 @@ d3.json("samples.json").then((bbdata) => {
             }
         };
 
+        Plotly.newPlot("bar", barData, layout);
+
+
+        trace2 = {
+            x: OTUs,
+            y: subfreq,
+            text: otulabels,
+            mode: 'markers',
+            marker: {
+                color: OTUs,
+                opacity: [1, 0.8, 0.6, 0.4],
+                size: subfreq
+            }
+        }
+
+
+        var bubblechart = [trace2];
+
+
+        var layout = {
+            title: 'OTU Frequency',
+            showlegend: false,
+            height: 600,
+            width: 930
+        }
+
+
+        Plotly.newPlot("bubble", bubblechart, layout)
+
+    }
+
+});
+
