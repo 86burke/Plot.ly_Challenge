@@ -5,13 +5,13 @@ d3.json("samples.json").then((bbdata) => {
     var data = bbdata;
 
     var idDD = data.names;
-    for (var x = 0; x < idDD.length; x++) {
+    for (var i = 0; i < idDD.length; i++) {
         selectBox = d3.select("#selDataset");
-        selectBox.append("option").text(idDD[x]);
+        selectBox.append("option").text(idDD[i]);
     }
 
-    bbplot(0)
 
+    bbplot(0)
     function bbplot(index) {
 
 
@@ -23,9 +23,12 @@ d3.json("samples.json").then((bbdata) => {
         var washfreq = data.metadata[+index].wfreq;
         console.log(washfreq);
 
+
+
         var demoKeys = Object.keys(data.metadata[index]);
         var demoValues = Object.values(data.metadata[index])
         var demoData = d3.select('#sample-metadata');
+
 
         demoData.html("");
 
@@ -34,11 +37,14 @@ d3.json("samples.json").then((bbdata) => {
             demoData.append("p").text(`${demoKeys[i]}: ${demoValues[i]}`);
         };
 
+
+
         var topotu = OTUs.slice(0, 10).reverse();
         var topfreq = subfreq.slice(0, 10).reverse();
         var toptips = data.samples[0].otu_labels.slice(0, 10).reverse();
         var toplabels = topotu.map((otu => "OTU " + otu));
         var revlabels = toplabels.reverse();
+
 
         var trace1 = {
             x: topfreq,
@@ -61,6 +67,7 @@ d3.json("samples.json").then((bbdata) => {
                 b: 50
             }
         };
+
 
         Plotly.newPlot("bar", barData, layout);
 
@@ -91,7 +98,66 @@ d3.json("samples.json").then((bbdata) => {
 
         Plotly.newPlot("bubble", bubblechart, layout)
 
+
+
+        var trace3 = [{
+            domain: { x: [0, 1], y: [0, 1] },
+            type: "indicator",
+            mode: "gauge+number",
+            value: washfreq,
+            title: { text: "Belly Button Washes Per Week" },
+            gauge: {
+                axis: { range: [0, 9], tickwidth: 0.5, tickcolor: "black" },
+                bar: { color: "#050a0a" },
+                bgcolor: "white",
+                borderwidth: 2,
+                bordercolor: "transparent",
+                steps: [
+                    { range: [0, 1], color: "#fff" },
+                    { range: [1, 2], color: "#e6fff5" },
+                    { range: [2, 3], color: "ccffeb" },
+                    { range: [3, 4], color: "b3ffe0" },
+                    { range: [4, 5], color: "#99ffd6" },
+                    { range: [5, 6], color: "#80ffcc" },
+                    { range: [6, 7], color: "#66ffc2" },
+                    { range: [7, 8], color: "#4dffb8" },
+                    { range: [8, 9], color: "#33ffad" }
+
+                ],
+            }
+        }];
+
+        gaugeData = trace3;
+
+        var layout = {
+            width: 600,
+            height: 500,
+            margin: { t: 0, b: 0 }
+        };
+
+        Plotly.newPlot("gauge", gaugeData, layout);
+
+    }
+
+
+    d3.selectAll("#selDataset").on("change", refreshData);
+
+
+
+    function refreshData() {
+        var dropdownMenu = d3.select("#selDataset");
+
+        var personsID = dropdownMenu.property("value");
+        console.log(personsID);
+
+        console.log(data)
+
+        for (var i = 0; i < data.names.length; i++) {
+            if (personsID === data.names[i]) {
+                updatePlots(i);
+                return
+            }
+        }
     }
 
 });
-
